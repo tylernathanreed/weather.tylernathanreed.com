@@ -1,0 +1,24 @@
+{
+    "name": "reedware/container-test-case",
+    "description": "Defines a test case that offers an empty service container.",
+    "require": {
+        "illuminate/contracts": "^10.13",
+        "illuminate/support": "^10.13",
+        "illuminate/testing": "^10.13",
+        "mockery/mockery": "^1.5",
+        "nesbot/carbon": "^2.67",
+        "phpunit/phpunit": "^10.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Reedware\\ContainerTestCase\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tyler Reed",
+            "email": "tylernathanreed@gmail.com"
+        }
+    ]
+}
