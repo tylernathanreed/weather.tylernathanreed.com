@@ -1,0 +1,143 @@
+<?php
+
+namespace Reedware\Weather\Drivers\WeatherApi;
+
+use Reedware\Weather\Drivers\WeatherApi\Requests\AstronomyRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\CurrentRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\ForecastRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\FutureRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\HistoryRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\Request;
+use Reedware\Weather\Drivers\WeatherApi\Requests\SearchRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\TimeZoneRequest;
+use Reedware\Weather\Drivers\WeatherApi\Responses\AstronomyResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\CurrentResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\ErrorResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\ForecastResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\FutureResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\HistoryResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\Response;
+use Reedware\Weather\Drivers\WeatherApi\Responses\SearchResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
+use Illuminate\Http\Client\Factory as Http;
+use Illuminate\Http\Client\Response as HttpResponse;
+
+class Client
+{
+    /**
+     * Creates a new client instance.
+     */
+    public function __construct(
+        protected Http $http,
+        protected string $apiKey,
+        protected string $baseUrl = 'https://api.weatherapi.com/v1/'
+    ) {
+        //
+    }
+
+    /**
+     * Returns the response for the specified astronomy request.
+     */
+    public function astronomy(AstronomyRequest $request): AstronomyResponse|ErrorResponse
+    {
+        return $this->create(AstronomyResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified forecast request.
+     */
+    public function forecast(ForecastRequest $request): ForecastResponse|ErrorResponse
+    {
+        return $this->create(ForecastResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified future request.
+     */
+    public function future(FutureRequest $request): FutureResponse|ErrorResponse
+    {
+        return $this->create(FutureResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified history request.
+     */
+    public function history(HistoryRequest $request): HistoryResponse|ErrorResponse
+    {
+        return $this->create(HistoryResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified current request.
+     */
+    public function current(CurrentRequest $request): CurrentResponse|ErrorResponse
+    {
+        return $this->create(CurrentResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified search request.
+     */
+    public function search(SearchRequest $request): SearchResponse|ErrorResponse
+    {
+        return $this->create(SearchResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified timeZone request.
+     */
+    public function timeZone(TimeZoneRequest $request): TimeZoneResponse|ErrorResponse
+    {
+        return $this->create(TimeZoneResponse::class, $request);
+    }
+
+    /**
+     * Creates the specified response from the given request.
+     */
+    protected function create(string $responseClass, Request $request): Response
+    {
+        $baseResponse = $this->send($request);
+
+        if (! is_null($error = $this->getErrorResponse($baseResponse))) {
+            return $error;
+        }
+
+        /** {@see Response::createFromBaseResponse} */
+        return $responseClass::createFromBaseResponse($baseResponse);
+    }
+
+    /**
+     * Returns whether or not the specified base response is an error response.
+     */
+    protected function getErrorResponse(HttpResponse $baseResponse): ?ErrorResponse
+    {
+        if (! is_null($response = ErrorResponse::tryFromBaseResponse($baseResponse))) {
+            return $response;
+        }
+
+        return null;
+    }
+
+    /**
+     * Sends the specified request.
+     */
+    protected function send(Request $request): HttpResponse
+    {
+        return $this->call($request->uri(), $request->parameters());
+    }
+
+    /**
+     * Makes the specified api call.
+     */
+    protected function call(string $uri, array $parameters): HttpResponse
+    {
+        return $this
+            ->http
+            ->baseUrl($this->baseUrl)
+            ->acceptJson()
+            ->dump()
+            ->get($uri, array_merge($parameters, [
+                'key' => $this->apiKey
+            ]));
+    }
+}

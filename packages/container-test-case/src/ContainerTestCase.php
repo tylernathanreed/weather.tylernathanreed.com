@@ -17,7 +17,7 @@ abstract class ContainerTestCase extends TestCase
     /**
      * Sets up the environment before each test.
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ abstract class ContainerTestCase extends TestCase
     /**
      * Tears down the application after each test.
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->tearDownContainer();
         $this->tearDownMockery();

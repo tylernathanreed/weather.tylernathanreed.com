@@ -1,0 +1,51 @@
+{
+    "name": "reedware/laravel-weather",
+    "description": "Adds multi-instance support for various weather apis.",
+    "authors": [
+        {
+            "name": "Tyler Reed",
+            "email": "tylernathanreed@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "illuminate/container": "^10.13",
+        "illuminate/support": "^10.13",
+        "illuminate/http": "^10.13",
+        "reedware/is-attribute": "^1.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.6",
+        "mockery/mockery": "^1.5",
+        "reedware/container-test-case": "^1.0"
+    },
+    "repositories": [
+        {"type": "path", "url": "../container-test-case" },
+        {"type": "path", "url": "../is-attribute" }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Reedware\\Weather\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Reedware\\Weather\\Tests\\": "tests/src"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Reedware\\Weather\\WeatherServiceProvider"
+            ],
+            "aliases": {
+                "Weather": "Reedware\\Weather\\Weather"
+            }
+        }
+    }
+}

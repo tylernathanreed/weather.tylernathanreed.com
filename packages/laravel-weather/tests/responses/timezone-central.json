@@ -1,0 +1,12 @@
+{
+    "location": {
+        "name": "Little Elm",
+        "region": "Texas",
+        "country": "USA",
+        "lat": 33.22,
+        "lon": -96.91,
+        "tz_id": "America/Chicago",
+        "localtime_epoch": 1685637979,
+        "localtime": "2023-06-01 11:46"
+    }
+}

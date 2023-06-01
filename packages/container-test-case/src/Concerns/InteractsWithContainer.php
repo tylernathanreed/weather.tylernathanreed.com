@@ -96,8 +96,14 @@ trait InteractsWithContainer
         return $this->mockAs(Config::class, 'config', function (MockInterface $mock) use ($config) {
             $mock
                 ->shouldReceive('get')
-                ->andReturnUsing(function (string $key, mixed $default = null) use ($config) {
+                ->andReturnUsing(function (string $key, mixed $default = null) use (&$config) {
                     return Arr::get($config, $key, $default);
+                });
+            
+            $mock
+                ->shouldReceive('set')
+                ->andReturnUsing(function (string $key, mixed $value) use (&$config) {
+                    return Arr::set($config, $key, $value);
                 });
         });
     }

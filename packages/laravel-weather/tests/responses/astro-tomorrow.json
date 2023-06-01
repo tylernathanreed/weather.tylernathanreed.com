@@ -1,0 +1,24 @@
+{
+    "location": {
+        "name": "Little Elm",
+        "region": "Texas",
+        "country": "USA",
+        "lat": 33.22,
+        "lon": -96.91,
+        "tz_id": "America/Chicago",
+        "localtime_epoch": 1685637938,
+        "localtime": "2023-06-01 11:45"
+    },
+    "astronomy": {
+        "astro": {
+            "sunrise": "06:19 AM",
+            "sunset": "08:32 PM",
+            "moonrise": "07:22 PM",
+            "moonset": "04:57 AM",
+            "moon_phase": "Waxing Gibbous",
+            "moon_illumination": "94",
+            "is_moon_up": 1,
+            "is_sun_up": 1
+        }
+    }
+}
