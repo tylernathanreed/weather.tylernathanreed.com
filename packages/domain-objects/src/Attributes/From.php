@@ -1,6 +1,6 @@
 <?php
 
-namespace Reedware\Weather\Drivers\WeatherApi\Attributes;
+namespace Reedware\DomainObjects\Attributes;
 
 use Attribute;
 

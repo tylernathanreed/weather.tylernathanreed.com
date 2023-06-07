@@ -2,17 +2,18 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Reedware\Weather\Drivers\WeatherApi\Attributes\Collect;
-use Reedware\Weather\Drivers\WeatherApi\Attributes\From;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
+use Reedware\Weather\Drivers\WeatherApi\Attributes\Collect;
+use Reedware\Weather\Drivers\WeatherApi\Attributes\From;
+use Reedware\Weather\Drivers\WeatherApi\DomainObject;
 use ReflectionClass;
 use ReflectionProperty;
 use RuntimeException;
 use Throwable;
 use UnitEnum;
 
-abstract class DTO
+abstract class DTO extends DomainObject
 {
     /**
      * Creates a new DTO instance using the specified array.

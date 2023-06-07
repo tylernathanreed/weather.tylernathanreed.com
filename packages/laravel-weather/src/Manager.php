@@ -7,6 +7,7 @@ use Reedware\Weather\Drivers\WeatherApi\Decorator;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\MultipleInstanceManager;
 use InvalidArgumentException;
+use Reedware\Weather\Drivers\WeatherAPI\ResponseResolver;
 
 class Manager extends MultipleInstanceManager
 {
@@ -53,6 +54,7 @@ class Manager extends MultipleInstanceManager
 
         $client = new WeatherApiClient(
             $this->app->make(Factory::class),
+            $this->app->make(ResponseResolver::class),
             $config['key']
         );
 

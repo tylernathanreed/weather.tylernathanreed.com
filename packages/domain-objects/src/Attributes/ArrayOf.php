@@ -1,14 +1,14 @@
 <?php
 
-namespace Reedware\Weather\Drivers\WeatherApi\Attributes;
+namespace Reedware\DomainObjects\Attributes;
 
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class Collect
+class ArrayOf
 {
     /**
-     * Creates a new #[Collect] attribute.
+     * Creates a new #[ArrayOf] attribute.
      */
     public function __construct(
         public readonly string $class

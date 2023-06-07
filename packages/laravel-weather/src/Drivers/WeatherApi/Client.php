@@ -21,6 +21,7 @@ use Reedware\Weather\Drivers\WeatherApi\Responses\SearchResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
 use Illuminate\Http\Client\Factory as Http;
 use Illuminate\Http\Client\Response as HttpResponse;
+use Reedware\Weather\Drivers\WeatherAPI\ResponseResolver;
 
 class Client
 {
@@ -29,6 +30,7 @@ class Client
      */
     public function __construct(
         protected Http $http,
+        protected ResponseResolver $resolver,
         protected string $apiKey,
         protected string $baseUrl = 'https://api.weatherapi.com/v1/'
     ) {
@@ -98,24 +100,7 @@ class Client
     {
         $baseResponse = $this->send($request);
 
-        if (! is_null($error = $this->getErrorResponse($baseResponse))) {
-            return $error;
-        }
-
-        /** {@see Response::createFromBaseResponse} */
-        return $responseClass::createFromBaseResponse($baseResponse);
-    }
-
-    /**
-     * Returns whether or not the specified base response is an error response.
-     */
-    protected function getErrorResponse(HttpResponse $baseResponse): ?ErrorResponse
-    {
-        if (! is_null($response = ErrorResponse::tryFromBaseResponse($baseResponse))) {
-            return $response;
-        }
-
-        return null;
+        return $this->resolver->resolve($baseResponse, $responseClass);
     }
 
     /**
@@ -135,7 +120,6 @@ class Client
             ->http
             ->baseUrl($this->baseUrl)
             ->acceptJson()
-            ->dump()
             ->get($uri, array_merge($parameters, [
                 'key' => $this->apiKey
             ]));

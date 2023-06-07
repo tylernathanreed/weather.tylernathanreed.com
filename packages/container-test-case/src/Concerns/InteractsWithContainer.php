@@ -2,18 +2,19 @@
 
 namespace Reedware\ContainerTestCase\Concerns;
 
-use Closure;
-use Mockery;
-use Mockery\MockInterface;
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
+use Closure;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\Container\Container as ContainerContract;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Mockery;
 use Mockery\Exception\InvalidCountException;
-use Illuminate\Contracts\Config\Repository as Config;
+use Mockery\MockInterface;
 
 trait InteractsWithContainer
 {
@@ -28,6 +29,8 @@ trait InteractsWithContainer
     protected function setUpContainer(): void
     {
         $this->container = Container::getInstance();
+
+        $this->container->instance(ContainerContract::class, $this->container);
 
         Facade::setFacadeApplication($this->container);
     }
@@ -58,6 +61,14 @@ trait InteractsWithContainer
         if (method_exists($provider, 'boot')) {
             $provider->boot();
         }
+    }
+
+    /**
+     * Creates a new instance of the specified service using the container.
+     */
+    protected function make(string $class): mixed
+    {
+        return $this->container->make($class);
     }
 
     /**
