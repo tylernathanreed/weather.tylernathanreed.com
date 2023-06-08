@@ -2,11 +2,11 @@
 
 use Mockery\MockInterface;
 use Reedware\DomainObjects\Contracts\DefaultCastersProvider;
-use Reedware\DomainObjects\Contracts\Factory;
 use Reedware\DomainObjects\Facades\Domain;
+use Reedware\DomainObjects\Domain as DomainService;
 
 it('accesses the factory', function () {
-    $expected = $this->mock(Factory::class);
+    $expected = $this->mock(DomainService::class);
     $actual = Domain::getFacadeRoot();
 
     expect($actual)->toBe($expected);

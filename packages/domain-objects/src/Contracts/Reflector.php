@@ -3,6 +3,7 @@
 namespace Reedware\DomainObjects\Contracts;
 
 use Reedware\DomainObjects\DomainObject;
+use ReflectionParameter;
 use ReflectionProperty;
 
 interface Reflector
@@ -38,6 +39,11 @@ interface Reflector
      * Returns whether or not the specified property is required.
      */
     public function isRequired(ReflectionProperty $property): bool;
+
+    /**
+     * Returns the constructor parameter for the specified property.
+     */
+    public function getConstructorParameter(ReflectionProperty $property): ?ReflectionParameter;
 
     /**
      * Returns the specified property attribute.

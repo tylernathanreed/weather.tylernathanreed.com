@@ -50,10 +50,10 @@ it('casts using the casters in order', function () {
             ->andReturn($index == 0 ? false : true);
         
         if ($index == 0) {
-            $caster->shouldNotReceive('cast');
+            $caster->shouldNotReceive('get');
         } else {
             $caster
-                ->shouldReceive('cast')
+                ->shouldReceive('get')
                 ->with($objectResolver, $property, $beforeValues[$index], $array)
                 ->once()
                 ->andReturn($afterValues[$index]);

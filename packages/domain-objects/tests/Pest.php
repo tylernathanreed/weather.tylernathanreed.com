@@ -12,6 +12,7 @@
 */
 
 uses(Reedware\DomainObjects\Tests\TestCase::class)->in('Unit');
+uses(Reedware\DomainObjects\Tests\TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------

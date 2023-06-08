@@ -33,7 +33,7 @@ class DomainObjectCastResolver implements CastResolver
                 continue;
             }
 
-            $value = $caster->cast($resolver, $property, $value, $array);
+            $value = $caster->get($resolver, $property, $value, $array);
         }
 
         return $value;

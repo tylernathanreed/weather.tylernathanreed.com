@@ -4,6 +4,7 @@ namespace Reedware\DomainObjects;
 
 use Reedware\DomainObjects\Contracts\Reflector;
 use ReflectionClass;
+use ReflectionParameter;
 use ReflectionProperty;
 use RuntimeException;
 use Throwable;
@@ -72,7 +73,15 @@ class DomainObjectReflector implements Reflector
      */
     public function getDefaultValue(ReflectionProperty $property): mixed
     {
-        return $property->getDefaultValue();
+        if ($property->hasDefaultValue() || $property->getType()?->allowsNull()) {
+            return $property->getDefaultValue() ?: null;
+        }
+
+        if (! is_null($parameter = $this->getConstructorParameter($property))) {
+            return $parameter->getDefaultValue();
+        }
+
+        return null;
     }
 
     /**
@@ -80,10 +89,38 @@ class DomainObjectReflector implements Reflector
      */
     public function isRequired(ReflectionProperty $property): bool
     {
-        $type = $property->getType();
+        if ($property->hasDefaultValue() || $property->getType()?->allowsNull()) {
+            return false;
+        }
 
-        return ! $property->hasDefaultValue()
-            && ! $type?->allowsNull();
+        if (is_null($parameter = $this->getConstructorParameter($property))) {
+            return true;
+        }
+
+        if ($parameter->isOptional() || $parameter->isDefaultValueAvailable()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the constructor parameter for the specified property.
+     */
+    public function getConstructorParameter(ReflectionProperty $property): ?ReflectionParameter
+    {
+        $parameters = array_filter(
+            $property->getDeclaringClass()->getConstructor()->getParameters(),
+            function (ReflectionParameter $parameter) use ($property) {
+                return $parameter->getName() == $property->getName();
+            }
+        );
+
+        if (empty($parameters)) {
+            return null;
+        }
+
+        return reset($parameters);
     }
 
     /**
