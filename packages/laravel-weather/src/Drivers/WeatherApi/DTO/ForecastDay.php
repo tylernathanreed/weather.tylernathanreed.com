@@ -2,9 +2,9 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Reedware\Weather\Drivers\WeatherApi\Attributes\Collect;
-use Reedware\Weather\Drivers\WeatherApi\Attributes\From;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
+use Reedware\DomainObjects\Attributes\ArrayOf;
+use Reedware\DomainObjects\Attributes\From;
 
 class ForecastDay extends DTO
 {
@@ -28,7 +28,7 @@ class ForecastDay extends DTO
         public readonly ?Tides $tides,
 
         /** @var array<Hour> */
-        #[Collect(Hour::class)]
+        #[ArrayOf(Hour::class)]
         #[From('hour')]
         public readonly array $hours
     ) {

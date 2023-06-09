@@ -90,10 +90,10 @@ it('decorates astronomy', function (array $parameters, array $expected) {
 it('decorates forecast', function (array $parameters, array $expected) {
     ($this->assertDecoration)('forecast', ForecastRequest::class, ForecastResponse::class, $parameters, $expected);
 })->with([
-    [['foo'], ['foo', 3, false, false]],
-    [['foo', 1], ['foo', 1, false, false]],
-    [['foo', 1, true], ['foo', 1, true, false]],
-    [['foo', 1, true, true], ['foo', 1, true, true]],
+    [['foo'], ['foo', 3, YesNo::no, YesNo::no]],
+    [['foo', 1], ['foo', 1, YesNo::no, YesNo::no]],
+    [['foo', 1, true], ['foo', 1, YesNo::yes, YesNo::no]],
+    [['foo', 1, true, true], ['foo', 1, YesNo::yes, YesNo::yes]],
 ]);
 
 it('decorates future', function (array $parameters, array $expected) {

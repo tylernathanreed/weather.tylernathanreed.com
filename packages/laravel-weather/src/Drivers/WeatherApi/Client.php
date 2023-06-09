@@ -21,7 +21,9 @@ use Reedware\Weather\Drivers\WeatherApi\Responses\SearchResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
 use Illuminate\Http\Client\Factory as Http;
 use Illuminate\Http\Client\Response as HttpResponse;
+use Reedware\Weather\Drivers\WeatherApi\Requests\SportsRequest;
 use Reedware\Weather\Drivers\WeatherAPI\ResponseResolver;
+use Reedware\Weather\Drivers\WeatherApi\Responses\SportsResponse;
 
 class Client
 {
@@ -86,11 +88,19 @@ class Client
     }
 
     /**
-     * Returns the response for the specified timeZone request.
+     * Returns the response for the specified timezone request.
      */
     public function timeZone(TimeZoneRequest $request): TimeZoneResponse|ErrorResponse
     {
         return $this->create(TimeZoneResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified sports request.
+     */
+    public function sports(SportsRequest $request): SportsResponse|ErrorResponse
+    {
+        return $this->create(SportsResponse::class, $request);
     }
 
     /**
@@ -100,7 +110,7 @@ class Client
     {
         $baseResponse = $this->send($request);
 
-        return $this->resolver->resolve($baseResponse, $responseClass);
+        return $this->resolver->resolve($responseClass, $baseResponse);
     }
 
     /**

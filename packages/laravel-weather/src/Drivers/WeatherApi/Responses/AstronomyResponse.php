@@ -2,9 +2,9 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\Responses;
 
+use Reedware\DomainObjects\Attributes\From;
 use Reedware\Weather\Drivers\WeatherApi\DTO\Astro;
 use Reedware\Weather\Drivers\WeatherApi\DTO\Location;
-use Reedware\Weather\Drivers\WeatherApi\Attributes\From;
 
 class AstronomyResponse extends Response
 {

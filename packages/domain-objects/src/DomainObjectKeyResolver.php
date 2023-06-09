@@ -21,11 +21,13 @@ class DomainObjectKeyResolver implements KeyResolver
     /**
      * Returns the array key for the specified property.
      */
-    public function resolve(ReflectionProperty $property): string
+    public function resolve(ReflectionProperty $property): ?string
     {
         /** @var ?From */
         $from = $this->reflector->getAttribute($property, From::class);
 
-        return $from?->key ?? $property->getName();
+        return ! is_null($from)
+            ? $from->key
+            : $property->getName();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
+use Carbon\Carbon;
+
 class Current extends DTO
 {
     /**
@@ -9,7 +11,7 @@ class Current extends DTO
      */
     public function __construct(
         /** Local time when the real time data was updated. */
-        public readonly string $last_updated,
+        public readonly Carbon $last_updated,
 
         /** Local time when the real time data was updated in unix time. */
         public readonly int $last_updated_epoch,
@@ -70,6 +72,12 @@ class Current extends DTO
 
         /** Wind gust in kilometer per hour. */
         public readonly float $gust_kph,
+
+        /** Visibility in kilometers. */
+        public readonly float $vis_km,
+
+        /** Visibility in miles. */
+        public readonly float $vis_miles,
 
         /** Air quality data */
         public readonly ?AirQuality $air_quality

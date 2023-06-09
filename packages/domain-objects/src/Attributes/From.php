@@ -11,7 +11,7 @@ class From
      * Creates a new #[From] attribute.
      */
     public function __construct(
-        public readonly string $key
+        public readonly ?string $key
     ) {
         //
     }

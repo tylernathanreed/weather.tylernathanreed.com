@@ -2,6 +2,7 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\Responses;
 
+use Reedware\DomainObjects\Attributes\ArrayOf;
 use Reedware\Weather\Drivers\WeatherApi\DTO\SportEvent;
 
 class SportsResponse extends Response
@@ -10,13 +11,13 @@ class SportsResponse extends Response
      * Creates a new response instance.
      */
     public function __construct(
-        /** @var array<SportEvent> */
+        #[ArrayOf(SportEvent::class)]
         public readonly array $football,
 
-        /** @var array<SportEvent> */
+        #[ArrayOf(SportEvent::class)]
         public readonly array $cricket,
 
-        /** @var array<SportEvent> */
+        #[ArrayOf(SportEvent::class)]
         public readonly array $golf
     ) {
         //

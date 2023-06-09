@@ -2,6 +2,7 @@
 
 namespace Reedware\DomainObjects;
 
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Reedware\DomainObjects\Contracts\CastResolver;
 use Reedware\DomainObjects\Contracts\KeyResolver;
@@ -56,7 +57,7 @@ class DomainObjectResolver implements ObjectResolver
             ));
         }
 
-        $value = $array[$key] ?? $this->reflector->getDefaultValue($property);
+        $value = Arr::get($array, $key) ?? $this->reflector->getDefaultValue($property);
 
         return $this->casts->cast($this, $property, $value, $array);
     }
@@ -64,9 +65,10 @@ class DomainObjectResolver implements ObjectResolver
     /**
      * Returns whether or not the specified property is missing within the given array.
      */
-    protected function isMissingProperty(string $key, array $array, ReflectionProperty $property): bool
+    protected function isMissingProperty(?string $key, array $array, ReflectionProperty $property): bool
     {
-        return ! array_key_exists($key, $array)
+        return ! is_null($key)
+            && ! Arr::has($array, $key)
             && $this->reflector->isRequired($property);
     }
 

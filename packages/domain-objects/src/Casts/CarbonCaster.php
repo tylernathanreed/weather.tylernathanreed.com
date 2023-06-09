@@ -39,6 +39,8 @@ class CarbonCaster extends Caster
         mixed $value,
         array $array
     ): mixed {
-        return Carbon::parse($value);
+        $class = $this->reflector->getTypeClass($property);
+
+        return $class::parse($value);
     }
 }

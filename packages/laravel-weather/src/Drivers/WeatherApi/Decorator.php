@@ -2,7 +2,7 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Reedware\Weather\Drivers\WeatherApi\Exceptions\ErrorResponseException;
 use Reedware\Weather\Drivers\WeatherApi\Requests\AstronomyRequest;
 use Reedware\Weather\Drivers\WeatherApi\Requests\CurrentRequest;
@@ -11,6 +11,7 @@ use Reedware\Weather\Drivers\WeatherApi\Requests\ForecastRequest;
 use Reedware\Weather\Drivers\WeatherApi\Requests\FutureRequest;
 use Reedware\Weather\Drivers\WeatherApi\Requests\HistoryRequest;
 use Reedware\Weather\Drivers\WeatherApi\Requests\SearchRequest;
+use Reedware\Weather\Drivers\WeatherApi\Requests\SportsRequest;
 use Reedware\Weather\Drivers\WeatherApi\Requests\TimeZoneRequest;
 use Reedware\Weather\Drivers\WeatherApi\Responses\AstronomyResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\CurrentResponse;
@@ -20,6 +21,7 @@ use Reedware\Weather\Drivers\WeatherApi\Responses\FutureResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\HistoryResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\Response;
 use Reedware\Weather\Drivers\WeatherApi\Responses\SearchResponse;
+use Reedware\Weather\Drivers\WeatherApi\Responses\SportsResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
 
 class Decorator
@@ -52,7 +54,7 @@ class Decorator
      */
     public function forecast(string $q, int $days = 3, bool $aqi = false, bool $alerts = false): ForecastResponse
     {
-        $request = new ForecastRequest($q, $days, $aqi, $alerts);
+        $request = new ForecastRequest($q, $days, YesNo::from($aqi), YesNo::from($alerts));
 
         return $this->returnOrThrow(
             $this->client->forecast($request)
@@ -112,7 +114,7 @@ class Decorator
     }
 
     /**
-     * Returns the response for the specified timeZone request.
+     * Returns the response for the specified timezone request.
      */
     public function timeZone(string $q): TimeZoneResponse
     {
@@ -120,6 +122,18 @@ class Decorator
 
         return $this->returnOrThrow(
             $this->client->timeZone($request)
+        );
+    }
+
+    /**
+     * Returns the response for the specified sports request.
+     */
+    public function sports(string $q): SportsResponse
+    {
+        $request = new SportsRequest($q);
+
+        return $this->returnOrThrow(
+            $this->client->sports($request)
         );
     }
 

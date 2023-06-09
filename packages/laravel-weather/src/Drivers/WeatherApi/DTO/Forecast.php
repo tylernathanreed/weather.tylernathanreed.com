@@ -2,8 +2,8 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Reedware\Weather\Drivers\WeatherApi\Attributes\From;
-use Reedware\Weather\Drivers\WeatherApi\Attributes\Collect;
+use Reedware\DomainObjects\Attributes\ArrayOf;
+use Reedware\DomainObjects\Attributes\From;
 
 class Forecast extends DTO
 {
@@ -11,9 +11,9 @@ class Forecast extends DTO
      * Creates a new forecast DTO instance.
      */
     public function __construct(
-        #[Collect(ForecastDay::class)]
+        #[ArrayOf(ForecastDay::class)]
         #[From('forecastday')]
-        public readonly array $forecastDays
+        public readonly array $forecast_days
     ) {
         //
     }

@@ -2,12 +2,12 @@
 
 namespace Reedware\Weather;
 
-use Reedware\Weather\Drivers\WeatherApi\Client as WeatherApiClient;
-use Reedware\Weather\Drivers\WeatherApi\Decorator;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\MultipleInstanceManager;
 use InvalidArgumentException;
-use Reedware\Weather\Drivers\WeatherAPI\ResponseResolver;
+use Reedware\Weather\Drivers\WeatherApi\Client as WeatherApiClient;
+use Reedware\Weather\Drivers\WeatherApi\Decorator;
+use Reedware\Weather\Drivers\WeatherApi\ResponseResolver;
 
 class Manager extends MultipleInstanceManager
 {

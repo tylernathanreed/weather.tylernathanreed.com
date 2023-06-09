@@ -10,23 +10,23 @@ class Astro extends DTO
      * Creates a new astro DTO instance.
      */
     public function __construct(
-        /** Sunrise time. */
+        /** Sunrise time (in HH:MM AM/PM format). */
         public readonly string $sunrise,
 
-        /** Sunset time. */
+        /** Sunset time (in HH:MM AM/PM format). */
         public readonly string $sunset,
 
-        /** Moonrise time. */
+        /** Moonrise time (in HH:MM AM/PM format). */
         public readonly string $moonrise,
 
-        /** Moonset time. */
+        /** Moonset time (in HH:MM AM/PM format). */
         public readonly string $moonset,
 
         /** Moon phases. */
         public readonly MoonPhase $moon_phase,
 
-        /** Moon illumination as %. */
-        public readonly float $moon_illumination,
+        /** Moon illumination as percentage. */
+        public readonly int $moon_illumination,
 
         /** Whether or not the moon is currently up. */
         public readonly ?bool $is_moon_up,

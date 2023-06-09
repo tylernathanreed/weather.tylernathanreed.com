@@ -2,7 +2,7 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class Hour extends DTO
 {
@@ -107,7 +107,7 @@ class Hour extends DTO
         public readonly float $gust_kph,
 
         /** UV Index. */
-        public readonly float $uv,
+        public readonly ?int $uv,
 
         /** Air quality. */
         public readonly ?AirQuality $air_quality,

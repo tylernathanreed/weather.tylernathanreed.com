@@ -57,8 +57,8 @@ it('sends requests', function (string $method, string $requestClass, string $res
     $this->resolver
         ->shouldReceive('resolve')
         ->withArgs(
-            fn (HttpResponse $a0) => $a0->json() === ['qux' => 'quix'],
-            fn ($a1) => $a1 === $responseClass
+            fn ($a0) => $a0 === $responseClass,
+            fn (HttpResponse $a1) => $a1->json() === ['qux' => 'quix'],
         )
         ->once()
         ->andReturn($response);
@@ -76,7 +76,7 @@ it('sends requests', function (string $method, string $requestClass, string $res
     ['timeZone', TimeZoneRequest::class, TimeZoneResponse::class]
 ]);
 
-it('returns errors', function (string $method, string $requestClass) {
+it('returns errors', function (string $method, string $requestClass, string $responseClass) {
     $url = "https://api.example.com/{$method}?bar=baz&key=foo";
     $baseResponse = Http::response(['qux' => 'quix'], 200);
 
@@ -102,8 +102,8 @@ it('returns errors', function (string $method, string $requestClass) {
     $this->resolver
         ->shouldReceive('resolve')
         ->withArgs(
-            fn (HttpResponse $a0) => $a0->json() === ['qux' => 'quix'],
-            fn ($a1) => $a1 === ErrorResponse::class
+            fn ($a0) => $a0 === $responseClass,
+            fn (HttpResponse $a1) => $a1->json() === ['qux' => 'quix'],
         )
         ->once()
         ->andReturn($response);
@@ -112,11 +112,11 @@ it('returns errors', function (string $method, string $requestClass) {
 
     expect($actual)->toBe($response);
 })->with([
-    ['astronomy', AstronomyRequest::class],
-    ['forecast', ForecastRequest::class],
-    ['future', FutureRequest::class],
-    ['history', HistoryRequest::class],
-    ['current', CurrentRequest::class],
-    ['search', SearchRequest::class],
-    ['timeZone', TimeZoneRequest::class]
+    ['astronomy', AstronomyRequest::class, AstronomyResponse::class],
+    ['forecast', ForecastRequest::class, ForecastResponse::class],
+    ['future', FutureRequest::class, FutureResponse::class],
+    ['history', HistoryRequest::class, HistoryResponse::class],
+    ['current', CurrentRequest::class, CurrentResponse::class],
+    ['search', SearchRequest::class, SearchResponse::class],
+    ['timeZone', TimeZoneRequest::class, TimeZoneResponse::class]
 ]);

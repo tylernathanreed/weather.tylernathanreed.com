@@ -38,6 +38,9 @@ class Day extends DTO
         /** Total precipitation in inches */
         public readonly float $totalprecip_in,
 
+        /** Total snow in centimeters. */
+        public readonly ?float $totalsnow_cm,
+
         /** Average visibility in kilometer */
         public readonly float $avgvis_km,
 
@@ -46,6 +49,19 @@ class Day extends DTO
 
         /** Average humidity as percentage */
         public readonly int $avghumidity,
+
+        /** Percentage that it will rain. */
+        public readonly ?int $daily_will_it_rain,
+
+        /** Percentage for chance of rain. */
+        public readonly ?int $daily_chance_of_rain,
+
+        /** Percentage that it will snow. */
+        public readonly ?int $daily_will_it_snow,
+
+        /** Percentage for chance of snow. */
+        public readonly ?int $daily_chance_of_snow,
+
 
         /** Weather condition. */
         public readonly Condition $condition,

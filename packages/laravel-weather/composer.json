@@ -12,8 +12,8 @@
         "illuminate/container": "^10.13",
         "illuminate/support": "^10.13",
         "illuminate/http": "^10.13",
-        "reedware/is-attribute": "^1.0",
-        "guzzlehttp/guzzle": "^7.7"
+        "guzzlehttp/guzzle": "^7.7",
+        "reedware/domain-objects": "^1.0"
     },
     "require-dev": {
         "pestphp/pest": "^2.6",
@@ -22,6 +22,7 @@
     },
     "repositories": [
         {"type": "path", "url": "../container-test-case" },
+        {"type": "path", "url": "../domain-objects" },
         {"type": "path", "url": "../is-attribute" }
     ],
     "autoload": {

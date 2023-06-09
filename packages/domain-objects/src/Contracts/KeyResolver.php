@@ -9,5 +9,5 @@ interface KeyResolver
     /**
      * Returns the array key for the specified property.
      */
-    public function resolve(ReflectionProperty $property): string;
+    public function resolve(ReflectionProperty $property): ?string;
 }

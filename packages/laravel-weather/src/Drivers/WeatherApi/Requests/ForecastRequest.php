@@ -2,6 +2,8 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\Requests;
 
+use Reedware\Weather\Drivers\WeatherApi\Requests\Enums\YesNo;
+
 class ForecastRequest extends Request
 {
     /**
@@ -15,10 +17,10 @@ class ForecastRequest extends Request
         public int $days = 3,
 
         /** Get air quality data. */
-        public bool $aqi = false,
+        public YesNo $aqi = YesNo::no,
 
         /** Get weather alert data data. */
-        public bool $alerts = false
+        public YesNo $alerts = YesNo::no
     ) {
         parent::__construct($q);
     }

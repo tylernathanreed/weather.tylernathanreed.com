@@ -3,6 +3,7 @@
 namespace Reedware\Weather\Tests;
 
 use Reedware\ContainerTestCase\ContainerTestCase;
+use Reedware\DomainObjects\DomainObjectServiceProvider;
 use Reedware\Weather\WeatherServiceProvider;
 
 abstract class TestCase extends ContainerTestCase
@@ -14,6 +15,7 @@ abstract class TestCase extends ContainerTestCase
     {
         parent::setUp();
 
+        $this->registerServiceProvider(DomainObjectServiceProvider::class);
         $this->registerServiceProvider(WeatherServiceProvider::class);
     }
 }

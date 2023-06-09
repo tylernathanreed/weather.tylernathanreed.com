@@ -2,7 +2,7 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class Location extends DTO
 {

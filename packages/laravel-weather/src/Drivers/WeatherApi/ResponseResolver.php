@@ -1,24 +1,42 @@
 <?php
 
-namespace Reedware\Weather\Drivers\WeatherAPI;
+namespace Reedware\Weather\Drivers\WeatherApi;
 
 use Illuminate\Http\Client\Response as HttpResponse;
+use Reedware\DomainObjects\Domain;
 use Reedware\Weather\Drivers\WeatherApi\Responses\ErrorResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\Response;
 
-class ResponseResolver extends DomainObjectResolver
+class ResponseResolver
 {
     /**
-     * Resolves the domain response from the specified http response.
+     * Creates a new response resolver instance.
      */
-    public function resolveUsingBaseResponse(string $class, HttpResponse $response): Response
-    {
-        $array = $response->json();
+    public function __construct(
+        protected Domain $domain
+    ) {
+        //
+    }
 
-        if (! is_null($error = $this->tryResolve(ErrorResponse::class, $array))) {
+    /**
+     * Resolves the specified response from the specified http response.
+     */
+    public function resolve(string $class, HttpResponse $baseResponse): Response
+    {
+        $response = $this->getResponseFromArray($class, $baseResponse->json());
+
+        return $response->setBaseResponse($baseResponse);
+    }
+
+    /**
+     * Resolves the speocified response from the given array.
+     */
+    protected function getResponseFromArray(string $class, array $array): Response
+    {
+        if (! is_null($error = $this->domain->tryResolve(ErrorResponse::class, $array))) {
             return $error;
         }
 
-        return $this->resolve($class, $array);
+        return $this->domain->resolve($class, $array);
     }
 }

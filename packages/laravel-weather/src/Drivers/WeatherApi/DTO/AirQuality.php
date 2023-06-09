@@ -2,7 +2,7 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Reedware\Weather\Drivers\WeatherApi\Attributes\From;
+use Reedware\DomainObjects\Attributes\From;
 use Reedware\Weather\Drivers\WeatherApi\DTO\Enums\UkDefraIndex;
 use Reedware\Weather\Drivers\WeatherApi\DTO\Enums\UsEpaIndex;
 
@@ -32,11 +32,11 @@ class AirQuality extends DTO
 
         /** US - EPA standard */
         #[From('us-epa-index')]
-        public readonly UsEpaIndex $usEpaIndex,
+        public readonly UsEpaIndex $us_epa_index,
 
         /** UK Defra Index */
         #[From('gb-defra-index')]
-        public readonly UkDefraIndex $gbDefraIndex
+        public readonly UkDefraIndex $gb_defra_index
     ) {
         //
     }

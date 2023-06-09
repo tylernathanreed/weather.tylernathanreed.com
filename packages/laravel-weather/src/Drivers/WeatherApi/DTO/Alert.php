@@ -2,7 +2,8 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
+use Reedware\DomainObjects\Attributes\From;
 
 class Alert extends DTO
 {
@@ -10,18 +11,44 @@ class Alert extends DTO
      * Creates a new alert DTO instance.
      */
     public function __construct(
+        /** Alert headline. */
         public readonly string $headline,
-        public readonly string $msgType,
+
+        /** Type of alert. */
+        public readonly string $msgtype,
+
+        /** Severity of alert. */
         public readonly string $severity,
+
+        /** Urgency. */
         public readonly string $urgency,
+
+        /** Areas covered. */
         public readonly string $areas,
+
+        /** Category. */
         public readonly string $category,
+
+        /** Certainty. */
         public readonly string $certainty,
+
+        /** Event. */
         public readonly string $event,
+
+        /** Note. */
         public readonly string $note,
+
+        /** Effective. */
         public readonly Carbon $effective,
-        public readonly string $expires,
-        public readonly string $desc,
+
+        /** Expires. */
+        public readonly Carbon $expires,
+
+        /** Description. */
+        #[From('desc')]
+        public readonly string $description,
+
+        /** Instruction. */
         public readonly string $instruction
     ) {
         //  

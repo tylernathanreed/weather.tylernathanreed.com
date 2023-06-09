@@ -12,6 +12,7 @@
 */
 
 uses(Reedware\Weather\Tests\TestCase::class)->in('src/Unit');
+uses(Reedware\Weather\Tests\Feature\TestCase::class)->in('src/Feature');
 
 /*
 |--------------------------------------------------------------------------

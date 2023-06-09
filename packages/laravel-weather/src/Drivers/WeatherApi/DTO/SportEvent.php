@@ -2,7 +2,7 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class SportEvent extends DTO
 {
@@ -14,7 +14,7 @@ class SportEvent extends DTO
         public readonly string $stadium,
 
         /** Country. */
-        public readonly int $country,
+        public readonly string $country,
 
         /** Region. */
         public readonly string $region,
