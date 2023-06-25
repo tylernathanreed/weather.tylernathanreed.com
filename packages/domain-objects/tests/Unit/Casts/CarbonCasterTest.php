@@ -56,6 +56,12 @@ it('parses values into carbon instances', function () {
     $value = '2023-01-02 12:34:56';
     $array = ['foo' => 'bar'];
 
+    $this->reflector
+        ->shouldReceive('getTypeClass')
+        ->with($property)
+        ->once()
+        ->andReturn(Carbon::class);
+
     $actual = $this->caster->get($resolver, $property, $value, $array);
 
     expect($actual)->toBeInstanceOf(Carbon::class);

@@ -15,12 +15,8 @@
     "require-dev": {
         "pestphp/pest": "^2.6",
         "mockery/mockery": "^1.5",
-        "reedware/container-test-case": "^1.0"
+        "reedware/container-testcase": "^1.0"
     },
-    "repositories": [
-        {"type": "path", "url": "../container-test-case"},
-        {"type": "path", "url": "../is-attribute"}
-    ],
     "license": "MIT",
     "autoload": {
         "psr-4": {

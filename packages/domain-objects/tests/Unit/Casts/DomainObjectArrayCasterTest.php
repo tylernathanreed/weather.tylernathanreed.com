@@ -5,7 +5,6 @@ use Reedware\DomainObjects\Attributes\ArrayOf;
 use Reedware\DomainObjects\Casts\DomainObjectArrayCaster;
 use Reedware\DomainObjects\Contracts\ObjectResolver;
 use Reedware\DomainObjects\Contracts\Reflector;
-use Reedware\DomainObjects\DomainObject;
 use Reedware\DomainObjects\Tests\Fixtures\Castable;
 
 beforeEach(function () {

@@ -12,7 +12,7 @@ it('makes domains', function () {
     $reflector = $this->mock(Reflector::class);
     $keys = $this->mock(KeyResolver::class);
 
-    $factory = $this->container->make(DomainFactory::class);
+    $factory = $this->make(DomainFactory::class);
 
     /** @var Domain */
     $domain = $factory->make();

@@ -8,6 +8,7 @@
 /.phpunit.cache
 /.vscode
 /node_modules
+/packages/*/composer.lock
 /packages/*/vendor
 /public/build
 /public/hot

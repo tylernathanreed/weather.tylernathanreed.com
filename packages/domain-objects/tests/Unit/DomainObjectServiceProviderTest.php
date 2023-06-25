@@ -24,16 +24,16 @@ it('registers the domain as a factory result singleton', function () {
             ->andReturn($expected);
     });
 
-    $actualA = $this->container->make(Domain::class);
-    $actualB = $this->container->make(Domain::class);
+    $actualA = $this->make(Domain::class);
+    $actualB = $this->make(Domain::class);
 
     expect($actualA)->toBe($expected);
     expect($actualB)->toBe($expected);
 });
 
 it('registers the factory as a singleton', function () {
-    $actualA = $this->container->make(Factory::class);
-    $actualB = $this->container->make(Factory::class);
+    $actualA = $this->make(Factory::class);
+    $actualB = $this->make(Factory::class);
 
     expect($actualA)->toBeInstanceOf(Factory::class);
     expect($actualA)->toBeInstanceOf(DomainFactory::class);
@@ -41,8 +41,8 @@ it('registers the factory as a singleton', function () {
 });
 
 it('registers the reflector as a singleton', function () {
-    $actualA = $this->container->make(Reflector::class);
-    $actualB = $this->container->make(Reflector::class);
+    $actualA = $this->make(Reflector::class);
+    $actualB = $this->make(Reflector::class);
 
     expect($actualA)->toBeInstanceOf(Reflector::class);
     expect($actualA)->toBeInstanceOf(DomainObjectReflector::class);
@@ -50,8 +50,8 @@ it('registers the reflector as a singleton', function () {
 });
 
 it('registers the key resolver as a singleton', function () {
-    $actualA = $this->container->make(KeyResolver::class);
-    $actualB = $this->container->make(KeyResolver::class);
+    $actualA = $this->make(KeyResolver::class);
+    $actualB = $this->make(KeyResolver::class);
 
     expect($actualA)->toBeInstanceOf(KeyResolver::class);
     expect($actualA)->toBeInstanceOf(DomainObjectKeyResolver::class);
@@ -59,8 +59,8 @@ it('registers the key resolver as a singleton', function () {
 });
 
 it('registers the cast resolver as a binding', function () {
-    $actualA = $this->container->make(CastResolver::class);
-    $actualB = $this->container->make(CastResolver::class);
+    $actualA = $this->make(CastResolver::class);
+    $actualB = $this->make(CastResolver::class);
 
     expect($actualA)->toBeInstanceOf(CastResolver::class);
     expect($actualA)->toBeInstanceOf(DomainObjectCastResolver::class);
@@ -72,8 +72,8 @@ it('registers the cast resolver as a binding', function () {
 });
 
 it('registers the default casters provider as a singleton', function () {
-    $actualA = $this->container->make(DefaultCastersProvider::class);
-    $actualB = $this->container->make(DefaultCastersProvider::class);
+    $actualA = $this->make(DefaultCastersProvider::class);
+    $actualB = $this->make(DefaultCastersProvider::class);
 
     expect($actualA)->toBeInstanceOf(DefaultCastersProvider::class);
     expect($actualA)->toBeInstanceOf(DefaultCasters::class);
