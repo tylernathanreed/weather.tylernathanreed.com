@@ -6,7 +6,7 @@ use Reedware\Weather\Manager;
 
 beforeEach(function () {
     /** @var Manager */
-    $this->manager = $this->container->make(Manager::class);
+    $this->manager = $this->make(Manager::class);
 });
 
 it('gets default instance name', function () {
@@ -28,7 +28,7 @@ it('sets the default instance name', function () {
 
     $this->manager->setDefaultInstance('bar');
 
-    expect($this->container->make('config')->get('weather.default'))->toBe('bar');
+    expect($this->make('config')->get('weather.default'))->toBe('bar');
 });
 
 it('gets instance config', function () {
