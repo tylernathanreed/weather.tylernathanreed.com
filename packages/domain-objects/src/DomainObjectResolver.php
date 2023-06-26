@@ -2,6 +2,7 @@
 
 namespace Reedware\DomainObjects;
 
+use Closure;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Reedware\DomainObjects\Contracts\CastResolver;
@@ -37,6 +38,12 @@ class DomainObjectResolver implements ObjectResolver
 
             $parameters[$key] = $value;
         }
+
+        $parameters = array_map(function ($value) use ($parameters) {
+            return $value instanceof Closure
+                ? ($value)($parameters)
+                : $value;
+        }, $parameters);
 
         return $this->reflector->newInstance($class, $parameters ?? []);
     }

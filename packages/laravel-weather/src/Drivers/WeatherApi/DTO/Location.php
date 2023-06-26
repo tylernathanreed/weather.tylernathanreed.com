@@ -3,6 +3,7 @@
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
 use Carbon\Carbon;
+use Reedware\DomainObjects\Attributes\Timezone;
 
 class Location extends DTO
 {
@@ -35,6 +36,7 @@ class Location extends DTO
         public readonly ?int $localtime_epoch,
 
         /** Local date and time. */
+        #[Timezone('tz_id', true)]
         public readonly ?Carbon $localtime,
 
         /** The url-safe name for this location */

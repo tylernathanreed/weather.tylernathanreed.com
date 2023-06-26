@@ -3,6 +3,7 @@
 namespace Reedware\DomainObjects\Casts;
 
 use Carbon\Carbon;
+use Reedware\DomainObjects\Attributes\Timezone;
 use Reedware\DomainObjects\Contracts\ObjectResolver;
 use Reedware\DomainObjects\Contracts\Reflector;
 use ReflectionProperty;
@@ -41,6 +42,20 @@ class CarbonCaster extends Caster
     ): mixed {
         $class = $this->reflector->getTypeClass($property);
 
-        return $class::parse($value);
+        /** @var ?Timezone */
+        $tz = $this->reflector->getAttribute($property, Timezone::class);
+        $tzId = null;
+
+        if (! is_null($tz)) {
+            if ($tz->isProperty) {
+                return function ($attributes) use ($class, $value, $tz) {
+                    return $class::parse($value, $attributes[$tz->tz_id]);
+                };
+            } else {
+                $tzId = $tz->tz_id;
+            }
+        }
+
+        return $class::parse($value, $tzId);
     }
 }

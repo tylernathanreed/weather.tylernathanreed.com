@@ -1,5 +1,6 @@
 {
     "name": "reedware/laravel-weather",
+    "version": "1.0",
     "description": "Adds multi-instance support for various weather apis.",
     "authors": [
         {
