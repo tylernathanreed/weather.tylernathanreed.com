@@ -3,6 +3,7 @@
 namespace Reedware\DomainObjects\Contracts;
 
 use Reedware\DomainObjects\DomainObject;
+use ReflectionClass;
 use ReflectionParameter;
 use ReflectionProperty;
 
@@ -44,6 +45,11 @@ interface Reflector
      * Returns the constructor parameter for the specified property.
      */
     public function getConstructorParameter(ReflectionProperty $property): ?ReflectionParameter;
+
+    /**
+     * Returns the specified class attribute.
+     */
+    public function getClassAttribute(ReflectionClass $class, string $attributeClass): ?object;
 
     /**
      * Returns the specified property attribute.

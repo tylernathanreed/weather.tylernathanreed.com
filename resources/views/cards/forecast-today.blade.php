@@ -1,5 +1,4 @@
 <?php $data = Weather::forecast('75252', 1); ?>
-<?php dd($data); ?>
 <?php $hours = $data->forecast->forecast_days[0]->hours; ?>
 <?php $morning = $hours[6]; ?>
 <?php $noon = $hours[11]; ?>

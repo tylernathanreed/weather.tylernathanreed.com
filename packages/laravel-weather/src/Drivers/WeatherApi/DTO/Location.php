@@ -36,7 +36,7 @@ class Location extends DTO
         public readonly ?int $localtime_epoch,
 
         /** Local date and time. */
-        #[Timezone('tz_id', true)]
+        #[Timezone('tz_id', true, true)]
         public readonly ?Carbon $localtime,
 
         /** The url-safe name for this location */

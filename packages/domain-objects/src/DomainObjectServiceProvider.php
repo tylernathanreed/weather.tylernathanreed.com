@@ -8,6 +8,7 @@ use Reedware\DomainObjects\Contracts\DefaultCastersProvider;
 use Reedware\DomainObjects\Contracts\Factory;
 use Reedware\DomainObjects\Contracts\KeyResolver;
 use Reedware\DomainObjects\Contracts\Reflector;
+use Reedware\DomainObjects\Contracts\TransformerFactory;
 use Reedware\DomainObjects\Domain;
 use Reedware\DomainObjects\Facades\Domain as Facade;
 
@@ -24,6 +25,7 @@ class DomainObjectServiceProvider extends ServiceProvider
         $this->registerKeyResolver();
         $this->registerCastResolver();
         $this->registerDefaultCastersProvider();
+        $this->registerTransformerFactory();
     }
 
     /**
@@ -86,5 +88,13 @@ class DomainObjectServiceProvider extends ServiceProvider
     protected function registerDefaultCastersProvider(): void
     {
         $this->app->singleton(DefaultCastersProvider::class, DefaultCasters::class);
+    }
+
+    /**
+     * Registers the transformer factory implementation.
+     */
+    protected function registerTransformerFactory(): void
+    {
+        $this->app->singleton(TransformerFactory::class, TransformerMatrix::class);
     }
 }

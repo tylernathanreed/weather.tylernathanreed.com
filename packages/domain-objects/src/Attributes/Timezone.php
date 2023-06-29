@@ -12,7 +12,8 @@ class Timezone
      */
     public function __construct(
         public readonly string $tz_id,
-        public readonly bool $isProperty = false
+        public readonly bool $isProperty = false,
+        public readonly bool $useGlobally = false
     ) {
         //
     }

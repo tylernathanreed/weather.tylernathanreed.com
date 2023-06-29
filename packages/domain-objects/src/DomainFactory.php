@@ -7,6 +7,7 @@ use Reedware\DomainObjects\Contracts\CastResolver;
 use Reedware\DomainObjects\Contracts\Factory;
 use Reedware\DomainObjects\Contracts\KeyResolver;
 use Reedware\DomainObjects\Contracts\Reflector;
+use Reedware\DomainObjects\Contracts\TransformerFactory;
 
 class DomainFactory implements Factory
 {
@@ -31,7 +32,8 @@ class DomainFactory implements Factory
             resolver: new DomainObjectResolver(
                 reflector: $this->container->make(Reflector::class),
                 keys: $this->container->make(KeyResolver::class),
-                casts: $casts
+                casts: $casts,
+                matrix: $this->container->make(TransformerFactory::class)
             )
         );
     }

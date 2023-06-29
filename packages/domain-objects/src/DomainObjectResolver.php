@@ -9,6 +9,7 @@ use Reedware\DomainObjects\Contracts\CastResolver;
 use Reedware\DomainObjects\Contracts\KeyResolver;
 use Reedware\DomainObjects\Contracts\ObjectResolver;
 use Reedware\DomainObjects\Contracts\Reflector;
+use Reedware\DomainObjects\Contracts\TransformerFactory;
 use Reedware\DomainObjects\DomainObject;
 use ReflectionProperty;
 
@@ -20,7 +21,8 @@ class DomainObjectResolver implements ObjectResolver
     public function __construct(
         protected Reflector $reflector,
         protected KeyResolver $keys,
-        protected CastResolver $casts
+        protected CastResolver $casts,
+        protected TransformerFactory $matrix
     ) {
         //
     }
@@ -45,7 +47,9 @@ class DomainObjectResolver implements ObjectResolver
                 : $value;
         }, $parameters);
 
-        return $this->reflector->newInstance($class, $parameters ?? []);
+        return $this->matrix->exists($class)
+            ? $this->matrix->make($class)->transform($parameters ?? [])
+            : $this->reflector->newInstance($class, $parameters ?? []);
     }
 
     /**

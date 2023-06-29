@@ -2,8 +2,10 @@
 
 namespace Reedware\DomainObjects;
 
+use DateTime;
 use Reedware\DomainObjects\Contracts\Caster;
 use Reedware\DomainObjects\Contracts\CastResolver;
+use Reedware\DomainObjects\Contracts\CastsWithTimezone;
 use Reedware\DomainObjects\Contracts\ObjectResolver;
 use ReflectionProperty;
 
@@ -79,6 +81,18 @@ class DomainObjectCastResolver implements CastResolver
         }));
 
         return $this;
+    }
+
+    /**
+     * Sets the timezone for casters that use them.
+     */
+    public function setTimezone(DateTime|string|null $tz): void
+    {
+        foreach ($this->getCasters() as $caster) {
+            if ($caster instanceof CastsWithTimezone) {
+                $caster->setTimezone($tz);
+            }
+        }
     }
 
     /**

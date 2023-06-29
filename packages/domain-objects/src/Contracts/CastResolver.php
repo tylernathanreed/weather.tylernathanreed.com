@@ -2,6 +2,7 @@
 
 namespace Reedware\DomainObjects\Contracts;
 
+use DateTime;
 use ReflectionProperty;
 
 interface CastResolver
@@ -30,6 +31,11 @@ interface CastResolver
      * Removes the specified caster.
      */
     public function remove(string $class): static;
+
+    /**
+     * Sets the timezone for casters that use them.
+     */
+    public function setTimezone(DateTime|string|null $tz): void;
 
     /**
      * Returns the casters.

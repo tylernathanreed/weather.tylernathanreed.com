@@ -2,6 +2,7 @@
 
 namespace Reedware\DomainObjects;
 
+use Attribute;
 use Reedware\DomainObjects\Contracts\Reflector;
 use ReflectionClass;
 use ReflectionParameter;
@@ -124,20 +125,38 @@ class DomainObjectReflector implements Reflector
     }
 
     /**
+     * Returns the specified class attribute.
+     */
+    public function getClassAttribute(ReflectionClass $class, string $attributeClass): ?object
+    {
+        if (! is_attribute($attributeClass, Attribute::TARGET_CLASS, TARGET_MATCH_INCLUDES)) {
+            return null;
+        }
+
+        $attributes = $class->getAttributes($attributeClass);
+
+        if (empty($attributes)) {
+            return null;
+        }
+
+        return head($attributes)->newInstance();
+    }
+
+    /**
      * Returns the specified property attribute.
      */
     public function getAttribute(ReflectionProperty $property, string $class): ?object
     {
+        if (! is_attribute($class, Attribute::TARGET_PROPERTY, TARGET_MATCH_INCLUDES)) {
+            return null;
+        }
+
         $attributes = $property->getAttributes($class);
 
         if (empty($attributes)) {
             return null;
         }
 
-        $attribute = head($attributes)->newInstance();
-        
-        return is_attribute($attribute)
-            ? $attribute
-            : null;
+        return head($attributes)->newInstance();
     }
 }
