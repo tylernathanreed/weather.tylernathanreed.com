@@ -5,11 +5,11 @@ namespace Reedware\DomainObjects;
 use Illuminate\Support\ServiceProvider;
 use Reedware\DomainObjects\Contracts\CastResolver;
 use Reedware\DomainObjects\Contracts\DefaultCastersProvider;
+use Reedware\DomainObjects\Contracts\Domain as DomainContract;
 use Reedware\DomainObjects\Contracts\Factory;
 use Reedware\DomainObjects\Contracts\KeyResolver;
 use Reedware\DomainObjects\Contracts\Reflector;
 use Reedware\DomainObjects\Contracts\TransformerFactory;
-use Reedware\DomainObjects\Domain;
 use Reedware\DomainObjects\Facades\Domain as Facade;
 
 class DomainObjectServiceProvider extends ServiceProvider
@@ -33,7 +33,7 @@ class DomainObjectServiceProvider extends ServiceProvider
      */
     protected function registerDomain(): void
     {
-        $this->app->singleton(Domain::class, function ($app) {
+        $this->app->singleton(DomainContract::class, function ($app) {
             return $app->make(Factory::class)->make();
         });
     }

@@ -1,4 +1,4 @@
-<?php $data = Weather::forecast('75252', 1); ?>
+<?php $data = Weather::forecast(1); ?>
 <?php $hours = collect($data->forecast->forecast_days[0]->hours); ?>
 <?php $dayTemp = round($hours->where('is_day', 1)->avg('temp_f')); ?>
 <?php $nightTemp = round($hours->where('is_day', 0)->avg('temp_f')); ?>

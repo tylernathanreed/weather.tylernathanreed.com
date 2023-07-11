@@ -2,6 +2,8 @@
 
 namespace Reedware\Weather\Drivers\WeatherApi\DTO;
 
+use Carbon\Carbon;
+use Reedware\DomainObjects\Attributes\NullValues;
 use Reedware\Weather\Drivers\WeatherApi\DTO\Enums\MoonPhase;
 
 class Astro extends DTO
@@ -11,16 +13,18 @@ class Astro extends DTO
      */
     public function __construct(
         /** Sunrise time (in HH:MM AM/PM format). */
-        public readonly string $sunrise,
+        public readonly Carbon $sunrise,
 
         /** Sunset time (in HH:MM AM/PM format). */
-        public readonly string $sunset,
+        public readonly Carbon $sunset,
 
         /** Moonrise time (in HH:MM AM/PM format). */
-        public readonly string $moonrise,
+        #[NullValues(['No moonrise'])]
+        public readonly ?Carbon $moonrise,
 
         /** Moonset time (in HH:MM AM/PM format). */
-        public readonly string $moonset,
+        #[NullValues(['No moonset'])]
+        public readonly ?Carbon $moonset,
 
         /** Moon phases. */
         public readonly MoonPhase $moon_phase,

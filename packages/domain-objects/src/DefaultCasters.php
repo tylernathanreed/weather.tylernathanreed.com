@@ -6,6 +6,7 @@ use Reedware\DomainObjects\Casts\CarbonCaster;
 use Reedware\DomainObjects\Casts\DomainObjectArrayCaster;
 use Reedware\DomainObjects\Casts\DomainObjectCaster;
 use Reedware\DomainObjects\Casts\EnumCaster;
+use Reedware\DomainObjects\Casts\NullCaster;
 use Reedware\DomainObjects\Contracts\DefaultCastersProvider;
 
 class DefaultCasters implements DefaultCastersProvider
@@ -21,6 +22,7 @@ class DefaultCasters implements DefaultCastersProvider
     public function __construct()
     {
         $this->casters = [
+            NullCaster::class,
             DomainObjectCaster::class,
             EnumCaster::class,
             CarbonCaster::class,

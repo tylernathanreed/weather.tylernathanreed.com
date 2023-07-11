@@ -21,8 +21,10 @@ use Reedware\Weather\Drivers\WeatherApi\Responses\SearchResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
 use Illuminate\Http\Client\Factory as Http;
 use Illuminate\Http\Client\Response as HttpResponse;
+use Reedware\Weather\Drivers\WeatherApi\Requests\IpLookupRequest;
 use Reedware\Weather\Drivers\WeatherApi\Requests\SportsRequest;
 use Reedware\Weather\Drivers\WeatherAPI\ResponseResolver;
+use Reedware\Weather\Drivers\WeatherApi\Responses\IpLookupResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\SportsResponse;
 
 class Client
@@ -85,6 +87,14 @@ class Client
     public function search(SearchRequest $request): SearchResponse|ErrorResponse
     {
         return $this->create(SearchResponse::class, $request);
+    }
+
+    /**
+     * Returns the response for the specified ip lookup request.
+     */
+    public function ipLookup(IpLookupRequest $request): IpLookupResponse|ErrorResponse
+    {
+        return $this->create(IpLookupResponse::class, $request);
     }
 
     /**

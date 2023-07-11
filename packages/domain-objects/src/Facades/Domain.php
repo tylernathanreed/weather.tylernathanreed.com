@@ -4,7 +4,7 @@ namespace Reedware\DomainObjects\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use Reedware\DomainObjects\Contracts\DefaultCastersProvider;
-use Reedware\DomainObjects\Domain as DomainService;
+use Reedware\DomainObjects\Contracts\Domain as DomainContract;
 
 /**
  * @method static \Reedware\DomainObjects\DomainObject resolve(string $class, array $array)
@@ -12,8 +12,7 @@ use Reedware\DomainObjects\Domain as DomainService;
  * @method static static addCast(\Reedware\DomainObjects\Contracts\Caster $caster)
  * @method static static replaceCast(string $class, \Reedware\DomainObjects\Contracts\Caster $replacement)
  * @method static static removeCast(string $caster)
- * @method static \Reedware\DomainObjects\Contracts\CastResolver getCastResolver()
- * @method static \Reedware\DomainObjects\Contracts\ObjectResolver getObjectResolver()
+ * @method static void setTimezone(DateTime|string|null $tz)
  */
 class Domain extends Facade
 {
@@ -22,7 +21,7 @@ class Domain extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return DomainService::class;
+        return DomainContract::class;
     }
 
     /**

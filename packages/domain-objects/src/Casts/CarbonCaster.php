@@ -68,15 +68,21 @@ class CarbonCaster extends Caster implements CastsWithTimezone
 
         if (! is_null($tz)) {
             if ($tz->isProperty) {
-                return function ($attributes) use ($class, $value, $tz) {
-                    return $class::parse($value, $attributes[$tz->tz_id]);
+                return function ($attributes) use ($resolver, $class, $value, $tz) {
+                    $tzId = $attributes[$tz->tz_id];
+
+                    if ($tz->useGlobally) {
+                        $resolver->getCastResolver()->setTimezone($tzId);
+                    }
+
+                    return $class::parse($value, $tzId);
                 };
             } else {
-                $tzId = $tz->tz_id;
-            }
+                if ($tz->useGlobally) {
+                    $resolver->getCastResolver()->setTimezone($tzId);
+                }
 
-            if ($tz->useGlobally) {
-                $resolver->getCastResolver()->setTimezone($tzId);
+                $tzId = $tz->tz_id;
             }
         }
 

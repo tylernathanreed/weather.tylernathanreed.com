@@ -2,12 +2,15 @@
 
 namespace Reedware\DomainObjects;
 
+use Carbon\CarbonTimeZone;
 use DateTime;
 use Reedware\DomainObjects\Contracts\Caster;
 use Reedware\DomainObjects\Contracts\CastResolver;
 use Reedware\DomainObjects\Contracts\CastsWithTimezone;
 use Reedware\DomainObjects\Contracts\ObjectResolver;
+use Reedware\DomainObjects\Exceptions\CastFailedException;
 use ReflectionProperty;
+use Throwable;
 
 class DomainObjectCastResolver implements CastResolver
 {
@@ -35,7 +38,11 @@ class DomainObjectCastResolver implements CastResolver
                 continue;
             }
 
-            $value = $caster->get($resolver, $property, $value, $array);
+            try {
+                $value = $caster->get($resolver, $property, $value, $array);
+            } catch (Throwable $e) {
+                throw new CastFailedException($caster, $property, $value, $e);
+            }
         }
 
         return $value;
@@ -81,6 +88,18 @@ class DomainObjectCastResolver implements CastResolver
         }));
 
         return $this;
+    }
+
+    /**
+     * Returns the timezone for the first cast that uses it.
+     */
+    public function getTimezone(): ?CarbonTimeZone
+    {
+        foreach ($this->getCasters() as $caster) {
+            if ($caster instanceof CastsWithTimezone) {
+                return $caster->getTimezone();
+            }
+        }
     }
 
     /**

@@ -58,6 +58,8 @@ class Manager extends MultipleInstanceManager
             $config['key']
         );
 
-        return new Decorator($client);
+        $fallbackLocation = $this->app->make('config')->get('weather.fallback-location');
+
+        return new Decorator($client, $fallbackLocation);
     }
 }

@@ -2,13 +2,15 @@
 
 namespace Reedware\DomainObjects;
 
+use DateTime;
 use Reedware\DomainObjects\Contracts\Caster;
 use Reedware\DomainObjects\Contracts\CastResolver;
+use Reedware\DomainObjects\Contracts\Domain as DomainContract;
 use Reedware\DomainObjects\Contracts\ObjectResolver;
 use Reedware\DomainObjects\DomainObject;
 use Throwable;
 
-class Domain
+class Domain implements DomainContract
 {
     /**
      * Creates a new domain instance.
@@ -84,5 +86,14 @@ class Domain
     public function getObjectResolver(): ObjectResolver
     {
         return $this->resolver;
+    }
+
+
+    /**
+     * Sets the timezone for casters that use them.
+     */
+    public function setTimezone(DateTime|string|null $tz): void
+    {
+        $this->casts->setTimezone($tz);
     }
 }

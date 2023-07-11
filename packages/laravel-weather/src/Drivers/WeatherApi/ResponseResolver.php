@@ -3,7 +3,7 @@
 namespace Reedware\Weather\Drivers\WeatherApi;
 
 use Illuminate\Http\Client\Response as HttpResponse;
-use Reedware\DomainObjects\Domain;
+use Reedware\DomainObjects\Contracts\Domain;
 use Reedware\Weather\Drivers\WeatherApi\Responses\ErrorResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\Response;
 
