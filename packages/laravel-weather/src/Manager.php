@@ -4,7 +4,9 @@ namespace Reedware\Weather;
 
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Client\Factory as HttpFactory;
+use Illuminate\Http\Request;
 use Illuminate\Support\MultipleInstanceManager;
 use InvalidArgumentException;
 use Reedware\Weather\Drivers\WeatherApi\Client as WeatherApiClient;
@@ -60,7 +62,9 @@ class Manager extends MultipleInstanceManager
             $config['key']
         );
 
-        $fallbackLocation = $this->app->make('config')->get('weather.fallback-location');
+        $location = $this->newLocation(function (string $ip, string $fallbackLocation) {
+
+        });
 
         $api = new Decorator($client);
         $cache = $this->app->make(CacheFactory::class)->store($config['cache']);
@@ -70,7 +74,19 @@ class Manager extends MultipleInstanceManager
             $api,
             $cache,
             $events,
-            $fallbackLocation
+            $location
+        );
+    }
+
+    /**
+     * Creates a new location resolver.
+     */
+    protected function newLocation(): Location
+    {
+        return new Location(
+            $this->app->make(Request::class),
+            $this->app->make(Session::class),
+            $this->app->make('config')->get('weather.fallback-location')
         );
     }
 }

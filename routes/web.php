@@ -18,3 +18,5 @@ Route::get('/', [PageController::class, 'showHome'])->name('pages.home');
 Route::get('{page}', [PageController::class, 'showPage'])
     ->whereIn('page', PageController::getPages())
     ->name('pages.show');
+
+Route::post('/', [PageController::class, 'search'])->name('search');

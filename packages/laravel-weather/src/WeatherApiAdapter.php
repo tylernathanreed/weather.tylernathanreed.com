@@ -2,7 +2,6 @@
 
 namespace Reedware\Weather;
 
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Cache\Repository;
@@ -24,20 +23,17 @@ use Reedware\Weather\Events\ApiRequestHandled;
 class WeatherApiAdapter
 {
     /**
-     * The location being searched.
-     */
-    protected ?string $q = null;
-
-    /**
      * Creates a new adapter instance.
      */
     public function __construct(
         protected Decorator $api,
         protected Repository $cache,
         protected Dispatcher $events,
-        protected string $fallbackLocation
+        protected Location $location
     ) {
-        //
+        $this->location->resolveUsing(function (?string $ip, string $fallback) {
+            return $this->resolveLocationString($ip, $fallback);
+        });
     }
 
     /**
@@ -45,7 +41,7 @@ class WeatherApiAdapter
      */
     public function for(string $q): self
     {
-        $this->q = $q;
+        $this->location->set($q);
 
         return $this;
     }
@@ -84,20 +80,20 @@ class WeatherApiAdapter
      */
     public function getLocationString(): string
     {
-        return $this->q ??= $this->resolveLocationString();
+        return $this->location->getValue();
     }
 
     /**
      * Resolves an automatic location to search based on IP address.
      */
-    protected function resolveLocationString(): string
+    protected function resolveLocationString(?string $ip, string $fallback): string
     {
         try {
-            $ipLocation = $this->api->ipLookup()->location;
+            $ipLocation = $this->api->ipLookup($ip)->location;
 
             return $ipLocation->lat . ',' . $ipLocation->lon;
         } catch (ErrorResponseException $e) {
-            return $this->fallbackLocation;
+            return $fallback;
         }
     }
 

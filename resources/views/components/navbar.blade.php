@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Weather</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="d-flex" role="search" method="POST" action="{{ route('search') }}">
+      @csrf
+      <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-primary" type="submit">
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
