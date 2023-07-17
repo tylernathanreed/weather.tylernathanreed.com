@@ -30,58 +30,19 @@ use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
 class Decorator
 {
     /**
-     * The location being searched.
-     */
-    protected ?string $q = null;
-
-    /**
      * Creates a new decorator instance.
      */
     public function __construct(
-        protected Client $client,
-        protected string $fallbackLocation
+        protected Client $client
     ) {
         //
     }
 
     /**
-     * Sets the location being searched.
-     */
-    public function for(string $q): self
-    {
-        $this->q = $q;
-
-        return $this;
-    }
-
-    /**
-     * Returns the location being searched.
-     */
-    public function getLocationString(): string
-    {
-        return $this->q ??= $this->resolveLocationString();
-    }
-
-    /**
-     * Resolves an automatic location to search based on IP address.
-     */
-    protected function resolveLocationString(): string
-    {
-        try {
-            $ipLocation = $this->ipLookup()->location;
-
-            return $ipLocation->lat . ',' . $ipLocation->lon;
-        } catch (ErrorResponseException $e) {
-            return $this->fallbackLocation;
-        }
-    }
-
-    /**
      * Returns the response for the specified astronomy request.
      */
-    public function astronomy(?Carbon $dt = null): AstronomyResponse
+    public function astronomy(string $q, ?Carbon $dt = null): AstronomyResponse
     {
-        $q = $this->getLocationString();
         $dt ??= Carbon::now();
 
         $request = new AstronomyRequest($q, $dt->toDateString());
@@ -94,9 +55,8 @@ class Decorator
     /**
      * Returns the response for the specified forecast request.
      */
-    public function forecast(int $days = 3, bool $aqi = false, bool $alerts = false): ForecastResponse
+    public function forecast(string $q, int $days = 3, bool $aqi = false, bool $alerts = false): ForecastResponse
     {
-        $q = $this->getLocationString();
         $request = new ForecastRequest($q, $days, YesNo::from($aqi), YesNo::from($alerts));
 
         return $this->returnOrThrow(
@@ -107,9 +67,8 @@ class Decorator
     /**
      * Returns the response for the specified future request.
      */
-    public function future(?Carbon $dt = null): FutureResponse
+    public function future(string $q, ?Carbon $dt = null): FutureResponse
     {
-        $q = $this->getLocationString();
         $dt ??= Carbon::now()->addDays(14);
 
         $request = new FutureRequest($q, $dt->toDateString());
@@ -122,9 +81,8 @@ class Decorator
     /**
      * Returns the response for the specified history request.
      */
-    public function history(?Carbon $dt = null): HistoryResponse
+    public function history(string $q, ?Carbon $dt = null): HistoryResponse
     {
-        $q = $this->getLocationString();
         $dt ??= Carbon::now()->subDay();
 
         $request = new HistoryRequest($q, $dt->toDateString());
@@ -137,9 +95,8 @@ class Decorator
     /**
      * Returns the response for the specified current request.
      */
-    public function current(bool $aqi = false): CurrentResponse
+    public function current(string $q, bool $aqi = false): CurrentResponse
     {
-        $q = $this->getLocationString();
         $request = new CurrentRequest($q, YesNo::from($aqi));
 
         return $this->returnOrThrow(
@@ -174,9 +131,8 @@ class Decorator
     /**
      * Returns the response for the specified timezone request.
      */
-    public function timeZone(): TimeZoneResponse
+    public function timeZone(string $q): TimeZoneResponse
     {
-        $q = $this->getLocationString();
         $request = new TimeZoneRequest($q);
 
         return $this->returnOrThrow(
@@ -187,9 +143,8 @@ class Decorator
     /**
      * Returns the response for the specified sports request.
      */
-    public function sports(): SportsResponse
+    public function sports(string $q): SportsResponse
     {
-        $q = $this->getLocationString();
         $request = new SportsRequest($q);
 
         return $this->returnOrThrow(

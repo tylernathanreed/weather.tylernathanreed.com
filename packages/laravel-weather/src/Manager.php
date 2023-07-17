@@ -2,6 +2,7 @@
 
 namespace Reedware\Weather;
 
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\MultipleInstanceManager;
 use InvalidArgumentException;
@@ -60,6 +61,9 @@ class Manager extends MultipleInstanceManager
 
         $fallbackLocation = $this->app->make('config')->get('weather.fallback-location');
 
-        return new Decorator($client, $fallbackLocation);
+        $api = new Decorator($client);
+        $cache = $this->app->make(CacheFactory::class)->store($config['cache']);
+
+        return new WeatherApiAdapter($api, $cache, $fallbackLocation);
     }
 }
