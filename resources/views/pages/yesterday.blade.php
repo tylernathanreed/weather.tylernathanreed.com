@@ -1,5 +1,6 @@
 @extends('layout')
 
 @section('content')
-    Yesterday
+    @include('cards.yesterday-summary')
+    @include('cards.yesterday-hourly')
 @endsection
