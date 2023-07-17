@@ -6,6 +6,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Events\Dispatcher;
 use Reedware\Weather\Drivers\WeatherApi\Decorator;
 use Reedware\Weather\Drivers\WeatherApi\Exceptions\ErrorResponseException;
 use Reedware\Weather\Drivers\WeatherApi\Responses\AstronomyResponse;
@@ -18,6 +19,7 @@ use Reedware\Weather\Drivers\WeatherApi\Responses\Response;
 use Reedware\Weather\Drivers\WeatherApi\Responses\SearchResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\SportsResponse;
 use Reedware\Weather\Drivers\WeatherApi\Responses\TimeZoneResponse;
+use Reedware\Weather\Events\ApiRequestHandled;
 
 class WeatherApiAdapter
 {
@@ -32,6 +34,7 @@ class WeatherApiAdapter
     public function __construct(
         protected Decorator $api,
         protected Repository $cache,
+        protected Dispatcher $events,
         protected string $fallbackLocation
     ) {
         //
@@ -59,7 +62,7 @@ class WeatherApiAdapter
             $response = $callback();
             $runtime = microtime(true) - $benchmark;
 
-            Debugbar::addMessage('Context: ' . json_encode($context) . '; Runtime: ' . $runtime);
+            $this->events->dispatch(new ApiRequestHandled($context, $response, $runtime));
 
             return $response;
         });

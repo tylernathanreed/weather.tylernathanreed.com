@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Reedware\Weather\Events\ApiRequestHandled;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,7 +27,12 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        /** @var Dispatcher */
+        $events = $this->app->make(Dispatcher::class);
+
+        $events->listen(ApiRequestHandled::class, function (ApiRequestHandled $event) {
+            Debugbar::addMessage('Context: ' . json_encode($event->context) . '; Runtime: ' . $event->runtime);
+        });
     }
 
     /**

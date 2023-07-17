@@ -29,33 +29,12 @@
           'href' => route('pages.show', ['page' => 'hourly'])
         ],
         [
-          'name' => '10 Day',
-          'href' => route('pages.show', ['page' => 'ten-day'])
+          'name' => 'Yesterday',
+          'href' => route('pages.show', ['page' => 'yesterday'])
         ],
         [
-          'name' => 'Weekend',
-          'href' => route('pages.show', ['page' => 'weekend'])
-        ],
-        [
-          'name' => 'Monthly',
-          'href' => route('pages.show', ['page' => 'monthly'])
-        ],
-        [
-          'name' => 'Radar',
-          'href' => route('pages.show', ['page' => 'radar'])
-        ],
-        [
-          'name' => 'More Forecasts',
-          'items' => [
-            [
-              'name' => 'Yesterday\'s Weather',
-              'href' => route('pages.show', ['page' => 'yesterday'])
-            ],
-            [
-              'name' => 'Air Quality',
-              'href' => route('pages.show', ['page' => 'air-quality'])
-            ]
-          ]
+          'name' => 'Air Quality',
+          'href' => route('pages.show', ['page' => 'air-quality'])
         ]
       ]; ?>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

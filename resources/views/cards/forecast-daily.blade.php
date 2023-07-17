@@ -19,9 +19,4 @@
             ];
         })
     ])
-    <div class="mt-4">
-        <a class="btn btn-primary" href="{{ route('pages.show', ['page' => 'ten-day']) }}">
-            Next 10 Days
-        </a>
-    </div>
 @endcomponent

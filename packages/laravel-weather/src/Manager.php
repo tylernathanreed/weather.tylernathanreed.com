@@ -3,7 +3,8 @@
 namespace Reedware\Weather;
 
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
-use Illuminate\Http\Client\Factory;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Support\MultipleInstanceManager;
 use InvalidArgumentException;
 use Reedware\Weather\Drivers\WeatherApi\Client as WeatherApiClient;
@@ -54,7 +55,7 @@ class Manager extends MultipleInstanceManager
         }
 
         $client = new WeatherApiClient(
-            $this->app->make(Factory::class),
+            $this->app->make(HttpFactory::class),
             $this->app->make(ResponseResolver::class),
             $config['key']
         );
@@ -63,7 +64,13 @@ class Manager extends MultipleInstanceManager
 
         $api = new Decorator($client);
         $cache = $this->app->make(CacheFactory::class)->store($config['cache']);
+        $events = $this->app->make(Dispatcher::class);
 
-        return new WeatherApiAdapter($api, $cache, $fallbackLocation);
+        return new WeatherApiAdapter(
+            $api,
+            $cache,
+            $events,
+            $fallbackLocation
+        );
     }
 }
