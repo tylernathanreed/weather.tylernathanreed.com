@@ -156,7 +156,7 @@ class WeatherApiAdapter
     /**
      * Returns the response for the specified current request.
      */
-    public function current(string $q, bool $aqi = false): CurrentResponse
+    public function current(bool $aqi = false): CurrentResponse
     {
         $m = __METHOD__;
         $q = $this->getLocationString();

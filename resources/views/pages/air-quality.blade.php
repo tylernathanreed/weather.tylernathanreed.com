@@ -1,5 +1,5 @@
 @extends('layout')
 
 @section('content')
-    Air Quality
+    @include('cards.air-quality')
 @endsection
